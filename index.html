@@ -48,6 +48,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
             border-left: 6px solid #3ddc84;
         }
+        /* Badge for hours in sidebar */
         .nav-badge {
             font-size: 0.8em;
             background: rgba(0,0,0,0.2);
@@ -127,6 +128,9 @@
         input:focus + .slider { box-shadow: 0 0 1px #28a745; }
         input:checked + .slider:before { transform: translateX(24px); }
         
+        /* Toggle Labels */
+        .toggle-label { font-size: 0.8em; font-weight: bold; color: #666; margin-left: 10px; vertical-align: middle; }
+
         /* --- TOOLTIPS --- */
         .tooltip-icon { 
             color: #17a2b8; cursor: help; font-size: 0.85em; font-weight: bold;
@@ -273,7 +277,7 @@
                         <div class="tooltip-text">Includes data entry from field logs, formatting templates, and initial QA/QC.</div>
                     </div>
                 </label>
-                <div class="rate-display">0.25 hr/boring</div>
+                <div class="rate-display">0.5 hr/boring</div>
                 <div class="rate-display" id="disp-boringProc" style="color:#28a745; font-weight:bold;">0.00 hrs</div>
 
                 <label>Incorporate Lab Data</label>
@@ -597,7 +601,7 @@
         const extraBoringTime = borings > 6 ? (borings - 6) * 0.1 : 0;
         let cadHours = 0;
         
-        const boringProc = borings * 0.25;
+        const boringProc = borings * 0.5; // CHANGED FROM 0.25 to 0.5
         document.getElementById('disp-boringProc').innerText = boringProc.toFixed(2) + ' hrs';
         cadHours += boringProc;
         
@@ -706,8 +710,8 @@ ESTIMATE COST: $${d.totalCost.toLocaleString(undefined, {minimumFractionDigits: 
             `);
         };
 
-        // CAD Items
-        addRow(cadItems, "Initial Boring Processing", `${d.borings} borings`, d.borings * 0.25);
+        // CAD Items - CHANGED to 0.5 below
+        addRow(cadItems, "Initial Boring Processing", `${d.borings} borings`, d.borings * 0.5); 
         if(isYes('includeLab')) addRow(cadItems, "Incorporate Lab Data", "Yes", d.footage * (1.5/60));
         if(isYes('includeMisc')) addRow(cadItems, "Misc gINT Edits", "Yes", d.footage * (1.5/60));
         const xs = getVal('xsCount'); if(xs>0) addRow(cadItems, "Cross Sections", `${xs}`, (xs*6) + (d.borings>6?(d.borings-6)*0.1:0));
